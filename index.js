@@ -19,7 +19,6 @@ app.use("/divisiones", divisionesRouter);
 
 // ---- PUERTO DEL SERVIDOR ----
 db.sequelize.sync()
-    .sync()
     .then(() => {
         app.listen(process.env.PORT || 3001, () => {
             console.log("server activo puerto 3001");
