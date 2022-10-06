@@ -16,7 +16,6 @@ app.use("/encargados", encargadosRouter);
 const divisionesRouter = require("./routes/Divisiones");
 app.use("/divisiones", divisionesRouter);
 
-
 // ---- PUERTO DEL SERVIDOR ----
 db.sequelize.sync()
     .then(() => {

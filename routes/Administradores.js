@@ -16,32 +16,30 @@ router.post("/", async (req, res) => {
             contrasena: hash,
             rol: rol
         });
-        res.json("Creado correctamente.");
+        return res.json("Creado correctamente.");
     });
 });
 
 router.post("/login", async (req, res) => {
     const { usuario, contrasena } = req.body;
 
-    const user = await Administradores.findOne({
-        where: { usuario: usuario },
-    });
+    const user = await Administradores.findOne({ where: { usuario: usuario }, });
 
-    if (!user) res.json({ error: "Usuario o contraseña incorrectas" });
+    if (!user) return res.json({ error: "Usuario o contraseña incorrectas" });
 
     bcrypt.compare(contrasena, user.contrasena).then(async (match) => {
-        if (!match) res.json({ error: "Usuario o contraseña incorrectas" });
+        if (!match) return res.json({ error: "Usuario o contraseña incorrectas" });
 
         const accessToken = sign(
             { usuario: user.usuario, rol: user.rol, id: user.id },
             "importantsecret"
         );
-        res.json({ token: accessToken, rol: user.rol, usuario: usuario, id: user.id });
+        return res.json({ token: accessToken, rol: user.rol, usuario: user.usuario, id: user.id });
     });
 });
 
 router.get('/auth', validateToken, (req, res) => {
-    res.json(req.user);
+    return res.json(req.user);
 })
 
 module.exports = router;
